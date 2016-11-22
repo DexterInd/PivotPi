@@ -10,12 +10,11 @@ import string
 
 
 import sys
-pivotpilib = "/home/pi/Dexter/PivotPi/Software/Python"
+
 try:
-	sys.path.insert(0, pivotpilib)
-	import PivotPi
+	import pivotpi
 except:
-	print("Cannot find PivotPi library in %" % pivotpilib)
+	print("Cannot find PivotPi library ")
 
 en_debug = 1
 en_pivotpi = 1
@@ -36,7 +35,7 @@ compiled_pivotPi = re.compile(regexpivotpi, re.IGNORECASE)
 servo=None
 
 try:
-	servo = PivotPi.servo(0x40, 60)
+	servo = pivotpi.servo(0x40, 60)
 except IOError:
 	print("no PivotPi Found: {}".format(servo))
 
