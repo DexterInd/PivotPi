@@ -37,7 +37,7 @@ echo ""
 
 echo "Welcome to PivotPi Installer."
 			
-pushd /home/pi/Dexter/PivotPi/Software/Python
+pushd ../Software/Python
 sudo python setup.py install
 sudo python3 setup.py install
 popd					 
