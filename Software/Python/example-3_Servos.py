@@ -1,4 +1,4 @@
-import PivotPi
+import pivotpi
 import time
 
 # In this example we turn three servos on the PivotPi by 90 Degrees, back and forth.  

@@ -1,4 +1,4 @@
-import PivotPi
+import pivotpi
 import time
 
 # servo.Angle(channel, degrees) will set a servo position to roughly the degrees you specify. However
