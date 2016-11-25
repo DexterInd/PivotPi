@@ -20,7 +20,12 @@ import time
 # Initialise the servo controller with the right address (0x40 if both switches are low), and the frequency
 # that it's actually running at. You can use 60 (target frequency), but in reality it can be off by more than 5%.
 # You can leave these two parameters empty to default to address 0x40 and the target frequency of 60Hz.
-servo = PivotPi.servo(0x40, 60)
+
+try:
+	servo = pivotpi.servo(0x40, 60)
+except:
+	print ("servo not found - quitting ")
+	exit(-1)
 
 
 print('Moving servo on channel 0-7, press Ctrl-C to quit...')
