@@ -37,7 +37,7 @@ servo=None
 try:
 	servo = pivotpi.servo(0x40, 60)
 except IOError:
-	print("no PivotPi Found: {}".format(servo))
+	print("no PivotPi Found")
 
 def isPivotPiMsg(msg):
 	'''
