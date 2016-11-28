@@ -21,7 +21,7 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Convert the 0-1 range into a value in the right range.
     return int(rightMin + (valueScaled * rightSpan))
 
-class servo(object):
+class pivotpi(object):
     servo_controller=None
     addr_00=0x40
     addr_01=0x41
@@ -44,13 +44,13 @@ class servo(object):
             raise IOError("PivotPi not connected")
         return
     
-    def PWM(self, channel, on, off):
+    def pwm(self, channel, on, off):
         try:
             self.servo_controller.set_pwm(channel, on, off)
         except:
             raise IOError("PivotPi not connected")
     
-    def Angle(self, channel, angle):
+    def angle(self, channel, angle):
         if angle >= 0 and angle <= 180 and channel >= 0 and channel <= 7:
             pwm_to_send = 4095 - translate(angle, 0, 180, self.servo_min, self.servo_max)
             try:
@@ -60,7 +60,7 @@ class servo(object):
                 raise IOError("PivotPi not connected")
         return -1
     
-    def AngleMicroseconds(self, channel, time):
+    def angle_microseconds(self, channel, time):
         if channel >= 0 and channel <= 7:
             try:
                 if(time <= 0):
@@ -77,7 +77,7 @@ class servo(object):
                 raise IOError("PivotPi not connected")
         return -1
     
-    def LED(self, channel, percent):
+    def led(self, channel, percent):
         if channel >= 0 and channel <= 7:
             try:
                 if(percent >= 100):
