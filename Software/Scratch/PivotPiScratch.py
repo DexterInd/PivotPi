@@ -34,7 +34,7 @@ compiled_pivotPi = re.compile(regexpivotpi, re.IGNORECASE)
 pivotpi=None
 
 try:
-    pivotpi = pivotpi.pivotpi(0x40, 60)
+    pivotpi = pivotpi.PivotPi(0x40, 60)
 except IOError:
     print("no PivotPi Found")
 

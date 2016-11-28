@@ -26,7 +26,7 @@ import pivotpi
 # that it's actually running at. You can use 60 (target frequency), but in reality it can be off by more than 5%.
 # You can leave these two parameters empty to default to address 0x40 and the target frequency of 60Hz.
 try:
-    pivotpi = pivotpi.pivotpi(0x40, 60)
+    pivotpi = pivotpi.PivotPi(0x40, 60)
 except:
     print ("PivotPi not found - quitting ")
     exit(-1)
