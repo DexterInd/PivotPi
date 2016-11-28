@@ -21,10 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
 
 import setuptools
 setuptools.setup(
-	name="pivotpi",
-	description="Drivers and examples for using the PivotPi in Python",
-	author="Dexter Industries",
-	url="http://www.dexterindustries.com/PivotPi/",
-	py_modules=['pivotpi','PCA9685'],
-	#install_requires=open('requirements.txt').readlines(),
+    name="pivotpi",
+    description="Drivers and examples for using the PivotPi in Python",
+    author="Dexter Industries",
+    url="http://www.dexterindustries.com/PivotPi/",
+    py_modules=['pivotpi','PCA9685'],
+    #install_requires=open('requirements.txt').readlines(),
 )
