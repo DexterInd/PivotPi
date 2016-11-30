@@ -31,12 +31,12 @@ regexpivotpi="^(Pivot|Pivot\s*LED)\s*([1-8])\s*([0-9]+|ON|OFF)\s*(%?)$"
 compiled_pivotPi = re.compile(regexpivotpi, re.IGNORECASE)
 
 # print("Lets get the party started")
-pivotpi=None
+scratch_pivotpi=None
 
 try:
-    pivotpi = pivotpi.PivotPi(0x40, 60)
-except IOError:
-    print("no PivotPi Found")
+    scratch_pivotpi = pivotpi.PivotPi()
+except:
+    print("PivotPi not Answering")
 
 def isPivotPiMsg(msg):
     '''
@@ -118,7 +118,7 @@ def handlePivotPi(msg):
             if en_debug:
                 print ("setting Pivot {} to angle {}".format(port+1,value))
             if en_pivotpi:
-                retval = pivotpi.angle(port, value)
+                retval = scratch_pivotpi.angle(port, value)
             else:
                 retval = "No PivotPi"
         except :
@@ -130,7 +130,7 @@ def handlePivotPi(msg):
         if en_debug:
             print("setting LED {} to {}".format(port+1,value))
         if en_pivotpi:
-            retval=pivotpi.led(port,value)
+            retval=scratch_pivotpi.led(port,value)
         else:
             retval="No PivotPi"
     
