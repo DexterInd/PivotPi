@@ -28,29 +28,37 @@ from pivotpi import *
 
 try:
     pivotpi = PivotPi(0x40, 60)
-except:
+except IOError:
     print ("PivotPi not found - quitting ")
     exit(-1)
-
+except: 
+    print ("Unknown error. Is PivotPi libary imported?")
+    exit(-1)
 
 print('Moving servos on channels 1-3, press Ctrl-C to quit...')
-while True:
-    pivotpi.angle(SERVO_1, 0)
-    pivotpi.angle(SERVO_2, 0)
-    pivotpi.angle(SERVO_3, 0)
-    
-    pivotpi.led(SERVO_1, 0)
-    pivotpi.led(SERVO_2, 0)
-    pivotpi.led(SERVO_3, 0)
-    
-    sleep(0.5)
-    
-    pivotpi.angle(SERVO_1, 90)
-    pivotpi.angle(SERVO_2, 90)
-    pivotpi.angle(SERVO_3, 90)
-    
-    pivotpi.led(SERVO_1, 75)
-    pivotpi.led(SERVO_2, 75)
-    pivotpi.led(SERVO_3, 75)
-    
-    sleep(0.5)
+
+try:
+    while True:
+        pivotpi.angle(SERVO_1, 0)
+        pivotpi.angle(SERVO_2, 0)
+        pivotpi.angle(SERVO_3, 0)
+        
+        pivotpi.led(SERVO_1, 0)
+        pivotpi.led(SERVO_2, 0)
+        pivotpi.led(SERVO_3, 0)
+        
+        sleep(0.5)
+        
+        pivotpi.angle(SERVO_1, 90)
+        pivotpi.angle(SERVO_2, 90)
+        pivotpi.angle(SERVO_3, 90)
+        
+        pivotpi.led(SERVO_1, 75)
+        pivotpi.led(SERVO_2, 75)
+        pivotpi.led(SERVO_3, 75)
+        
+        sleep(0.5)
+except KeyboardInterrupt:
+    print("\nGoodbye")
+except:
+    print ("Unknown error")

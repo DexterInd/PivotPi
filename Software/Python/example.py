@@ -48,6 +48,6 @@ try:
             pivotpi.angle_microseconds(i, 550 + (i * 272))
             time.sleep(0.05)
 except KeyboardInterrupt:
-    print("Goodbye")
+    print("\nGoodbye")
 except:
     print("Unknown error")
