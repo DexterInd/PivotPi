@@ -2,9 +2,6 @@ from __future__ import print_function
 from __future__ import division
 from builtins import input
 
-import time
-
-import pivotpi
 
 # In this example we turn three servos on the PivotPi by 90 Degrees, back and forth.  
 
@@ -25,31 +22,43 @@ import pivotpi
 # Initialise the PivotPi servo controller with the right address (0x40 if both switches are low), and the frequency
 # that it's actually running at. You can use 60 (target frequency), but in reality it can be off by more than 5%.
 # You can leave these two parameters empty to default to address 0x40 and the target frequency of 60Hz.
+
+from time import sleep
+from pivotpi import *
+
 try:
-    pivotpi = pivotpi.PivotPi(0x40, 60)
-except:
+    pivotpi = PivotPi(0x40, 60)
+except IOError:
     print ("PivotPi not found - quitting ")
     exit(-1)
-
+except: 
+    print ("Unknown error. Is PivotPi libary imported?")
+    exit(-1)
 
 print('Moving servos on channels 1-3, press Ctrl-C to quit...')
-while True:
-    pivotpi.angle(0, 0)
-    pivotpi.angle(1, 0)
-    pivotpi.angle(2, 0)
-    
-    pivotpi.led(0, 0)
-    pivotpi.led(1, 0)
-    pivotpi.led(2, 0)
-    
-    time.sleep(0.5)
-    
-    pivotpi.angle(0, 90)
-    pivotpi.angle(1, 90)
-    pivotpi.angle(2, 90)
-    
-    pivotpi.led(0, 75)
-    pivotpi.led(1, 75)
-    pivotpi.led(2, 75)
-    
-    time.sleep(0.5)
+
+try:
+    while True:
+        pivotpi.angle(SERVO_1, 0)
+        pivotpi.angle(SERVO_2, 0)
+        pivotpi.angle(SERVO_3, 0)
+        
+        pivotpi.led(SERVO_1, 0)
+        pivotpi.led(SERVO_2, 0)
+        pivotpi.led(SERVO_3, 0)
+        
+        sleep(0.5)
+        
+        pivotpi.angle(SERVO_1, 90)
+        pivotpi.angle(SERVO_2, 90)
+        pivotpi.angle(SERVO_3, 90)
+        
+        pivotpi.led(SERVO_1, 75)
+        pivotpi.led(SERVO_2, 75)
+        pivotpi.led(SERVO_3, 75)
+        
+        sleep(0.5)
+except KeyboardInterrupt:
+    print("\nGoodbye")
+except:
+    print ("Unknown error")

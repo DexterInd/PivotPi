@@ -2,9 +2,7 @@ from __future__ import print_function
 from __future__ import division
 from builtins import input
 
-import time
 
-import pivotpi
 
 # angle(channel, degrees) will set a servo position to roughly the degrees you specify. However
 # each servo is different, so if it's calibrated for one servo, it won't be the same for others.
@@ -23,21 +21,33 @@ import pivotpi
 # Initialise the PivotPi servo controller with the right address (0x40 if both switches are low), and the frequency
 # that it's actually running at. You can use 60 (target frequency), but in reality it can be off by more than 5%.
 # You can leave these two parameters empty to default to address 0x40 and the target frequency of 60Hz.
+
+import time
+import pivotpi
+
 try:
     pivotpi = pivotpi.PivotPi(0x40, 60)
-except:
+except IOError:
     print("PivotPi not found - quitting")
+    exit(-1)
+except: 
+    print("Unknown error with PivotPi. Is there a problem with the library?")
     exit(-1)
 
 print('Moving servos on channel 1-8, press Ctrl-C to quit...')
-while True:
-    for i in range (8):
-        #pivotpi.angle(i, 0)
-        pivotpi.led(i, 0)
-        pivotpi.angle_microseconds(i, 1500)
-        time.sleep(0.05)
-    for i in range (8):
-        #pivotpi.angle(i, 180)
-        pivotpi.led(i, (i + 1) * 4)
-        pivotpi.angle_microseconds(i, 550 + (i * 272))
-        time.sleep(0.05)
+try:
+    while True:
+        for i in range (8):
+            #pivotpi.angle(i, 0)
+            pivotpi.led(i, 0)
+            pivotpi.angle_microseconds(i, 1500)
+            time.sleep(0.05)
+        for i in range (8):
+            #pivotpi.angle(i, 180)
+            pivotpi.led(i, (i + 1) * 4)
+            pivotpi.angle_microseconds(i, 550 + (i * 272))
+            time.sleep(0.05)
+except KeyboardInterrupt:
+    print("\nGoodbye")
+except:
+    print("Unknown error")
