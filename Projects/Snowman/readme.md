@@ -4,4 +4,4 @@ Snowman Scratch code.
 
 1 pivotpi
 
-
+![snowman](snowman.png)
