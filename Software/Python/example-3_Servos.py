@@ -26,8 +26,9 @@ from builtins import input
 from time import sleep
 from pivotpi import *
 
+# Setup the PivotPi.
 try:
-    pivotpi = PivotPi(0x40, 60)
+    pivotpi = PivotPi(0x40, 60)     # Default address 0x40, with the frequency 60 Hz.
 except IOError:
     print ("PivotPi not found - quitting ")
     exit(-1)
@@ -39,21 +40,21 @@ print('Moving servos on channels 1-3, press Ctrl-C to quit...')
 
 try:
     while True:
-        pivotpi.angle(SERVO_1, 0)
-        pivotpi.angle(SERVO_2, 0)
-        pivotpi.angle(SERVO_3, 0)
+        pivotpi.angle(SERVO_1, 0)   # Set Servo 1 to 0 Degrees.
+        pivotpi.angle(SERVO_2, 0)   # Set Servo 2 to 0 Degrees.
+        pivotpi.angle(SERVO_3, 0)   # Set Servo 3 to 0 Degrees.
         
-        pivotpi.led(SERVO_1, 0)
-        pivotpi.led(SERVO_2, 0)
-        pivotpi.led(SERVO_3, 0)
+        pivotpi.led(SERVO_1, 0)     # Set LED 1 to 0 Power.
+        pivotpi.led(SERVO_2, 0)     # Set LED 2 to 0 Power.
+        pivotpi.led(SERVO_3, 0)     # Set LED 3 to 0 Power.
         
         sleep(0.5)
         
-        pivotpi.angle(SERVO_1, 90)
+        pivotpi.angle(SERVO_1, 90)  # Set Servo 1 to a 90 Degree Angle.
         pivotpi.angle(SERVO_2, 90)
         pivotpi.angle(SERVO_3, 90)
         
-        pivotpi.led(SERVO_1, 75)
+        pivotpi.led(SERVO_1, 75)    # Set Servo 1 to a 75 Degree Angle.
         pivotpi.led(SERVO_2, 75)
         pivotpi.led(SERVO_3, 75)
         
