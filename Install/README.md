@@ -7,6 +7,7 @@ If you are running Raspbian for Robots image from Dexter Industries, they you sh
 If you are running your own custom image. You will have to run the install script first.
 
 Make the install script executable:
+
 `sudo chmod +x install.sh`
 
 Run the install.sh script to install the PivotPi libraries:
