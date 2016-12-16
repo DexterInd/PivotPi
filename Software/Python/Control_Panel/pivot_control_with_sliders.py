@@ -177,20 +177,20 @@ class BoxSizerPanel(wx.Panel):
 
 
 if __name__ == "__main__":
-    # p = PivotPi()   
-    # try:
-    p = PivotPi()
-    app = PivotControlApp(False)
+ 
+    try:
+        p = PivotPi()
+        app = PivotControlApp(False)
 
-    # except:
-    #     class NoPivot(wx.App):
-    #         def OnInit(self):
-    #             dlg = wx.MessageBox("Unfortunately no PivotPi is Detected\nhttp://DexterIndustries.com/pivotpi for more details", 
-    #                 "ERROR", wx.ICON_WARNING)
-    #             return True
+    except:
+        class NoPivot(wx.App):
+            def OnInit(self):
+                dlg = wx.MessageBox("Unfortunately no PivotPi is Detected\nhttp://DexterIndustries.com/pivotpi for more details", 
+                    "ERROR", wx.ICON_WARNING)
+                return True
                 
 
-    #     app = NoPivot(False)
+        app = NoPivot(False)
 
     app.MainLoop()
         
