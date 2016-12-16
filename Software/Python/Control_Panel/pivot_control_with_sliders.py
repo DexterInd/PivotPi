@@ -119,10 +119,10 @@ class BoxSizerPanel(wx.Panel):
                                 wx.FONTSTYLE_NORMAL,
                                 wx.FONTWEIGHT_BOLD))
         title_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        bitmap = wx.BitmapFromImage("PivotPiIcon.jpg",type=wx.BITMAP_TYPE_JPG)
-        title_icon = wx.StaticBitmap(self, bitmap=bitmap)
-        title_sizer.Add(title, 1, wx.EXPAND, 20)
-        title_sizer.Add(title_icon,0,wx.RIGHT,20)
+        bitmap = wx.Image("PivotPiIcon.jpg",wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        title_icon = wx.StaticBitmap(self, -1, bitmap)
+        title_sizer.Add(title, 1, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 20)
+        title_sizer.Add(title_icon,0,wx.ALIGN_CENTER_VERTICAL|wx.LEFT,40)
         self.vsizer.AddSpacer(20)
         self.vsizer.Add(title_sizer, 1, wx.ALIGN_CENTER_HORIZONTAL, 20)
 
@@ -167,26 +167,30 @@ class BoxSizerPanel(wx.Panel):
         self.code_btn = wx.Button(self, label="Go to PivotPi Code Folder")
         self.exit_btn.SetBackgroundColour("White")
         self.code_btn.SetBackgroundColour("White")
-        exit_sizer.Add(self.exit_txt, 1, wx.EXPAND|wx.LEFT, 100)
-        exit_sizer.Add(self.code_btn, 0, wx.CENTER, 60)
-        exit_sizer.Add(self.exit_txt, 1, wx.EXPAND|wx.LEFT, 100)
-        exit_sizer.Add(self.exit_btn, 0, wx.RIGHT, 10)
+        exit_sizer.Add(self.exit_txt, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL|wx.LEFT, 100)
+        exit_sizer.Add(self.code_btn, 0, wx.ALIGN_CENTER_VERTICAL|wx.CENTER, 60)
+        exit_sizer.Add(self.exit_txt, 1, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND|wx.LEFT, 100)
+        exit_sizer.Add(self.exit_btn, 0, wx.ALIGN_CENTER_VERTICAL|wx.RIGHT, 10)
         self.vsizer.Add(exit_sizer, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.BOTTOM, 10)
 
         self.SetSizer(self.vsizer)
 
 
 if __name__ == "__main__":
-    try:
-        p = PivotPi()
-        app = PivotControlApp(False)
-        app.MainLoop()
-    except:
-        class NoPivot(wx.App):
-            def OnInit(self):
-                dlg = wx.MessageBox("Unfortunately no PivotPi is Detected\nhttp://DexterIndustries.com/pivotpi for more details", 
-                    "ERROR", wx.ICON_WARNING)
-                return True
-        app = NoPivot(False)
-        app.MainLoop()
+    # p = PivotPi()   
+    # try:
+    p = PivotPi()
+    app = PivotControlApp(False)
+
+    # except:
+    #     class NoPivot(wx.App):
+    #         def OnInit(self):
+    #             dlg = wx.MessageBox("Unfortunately no PivotPi is Detected\nhttp://DexterIndustries.com/pivotpi for more details", 
+    #                 "ERROR", wx.ICON_WARNING)
+    #             return True
+                
+
+    #     app = NoPivot(False)
+
+    app.MainLoop()
         
