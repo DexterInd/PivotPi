@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=PivotPi Control Panel
+Comment=PivotPi Control Panel
+Icon=/home/pi/Dexter/PivotPi/Software/Python/Control_Panel/PivotPiIcon.jpg
+Exec=lxterminal  --title "PivotPi Control Panel - Do not close this window!" --command "gksu python /home/pi/Dexter/PivotPi/Software/Python/Control_Panel/pivot_control_with_sliders.py"
+NoDisplay=true
