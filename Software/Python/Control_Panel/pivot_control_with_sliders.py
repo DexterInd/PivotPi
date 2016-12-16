@@ -119,7 +119,10 @@ class BoxSizerPanel(wx.Panel):
                                 wx.FONTSTYLE_NORMAL,
                                 wx.FONTWEIGHT_BOLD))
         title_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        bitmap = wx.BitmapFromImage("PivotPiIcon.jpg",type=wx.BITMAP_TYPE_JPG)
+        title_icon = wx.StaticBitmap(self, bitmap=bitmap)
         title_sizer.Add(title, 1, wx.EXPAND, 20)
+        title_sizer.Add(title_icon,0,wx.RIGHT,20)
         self.vsizer.AddSpacer(20)
         self.vsizer.Add(title_sizer, 1, wx.ALIGN_CENTER_HORIZONTAL, 20)
 
@@ -174,7 +177,16 @@ class BoxSizerPanel(wx.Panel):
 
 
 if __name__ == "__main__":
-    p = PivotPi()
-    app = PivotControlApp(False)
-    app.MainLoop()
+    try:
+        p = PivotPi()
+        app = PivotControlApp(False)
+        app.MainLoop()
+    except:
+        class NoPivot(wx.App):
+            def OnInit(self):
+                dlg = wx.MessageBox("Unfortunately no PivotPi is Detected\nhttp://DexterIndustries.com/pivotpi for more details", 
+                    "ERROR", wx.ICON_WARNING)
+                return True
+        app = NoPivot(False)
+        app.MainLoop()
         
