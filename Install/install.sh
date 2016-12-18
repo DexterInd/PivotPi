@@ -1,5 +1,13 @@
 #! /bin/bash
 
+if [[ $EUID -ne 0 ]]; then
+	echo "This script must be run as root" 
+	exit 1
+fi
+
+SCRIPTDIR="$(readlink -f $(dirname $0))"
+echo $SCRIPTDIR
+
 #check if there's an argument on the command line
 if [[ -f /home/pi/quiet_mode ]]
 then
@@ -36,15 +44,100 @@ echo " |_|   |_| \_/ \___/ \__|_|   |_|"
 echo ""
 
 echo "Welcome to PivotPi Installer."
+
+sudo apt-get install python-pip git libi2c-dev i2c-tools python-smbus python3-smbus python-dev -y
+
+echo " "
+RASPI_BL="/etc/modprobe.d/raspi-blacklist.conf"
+MODS="i2c spi"
+if [ -f ${RASPI_BL} ]; then
+    echo "Removing blacklist from ${RASPI_BL} . . ."
+    echo "=================================================================="
+    echo " "
+    for i in ${MODS}
+    do
+        MOD_NAME=$(echo $i | tr [a-z] [A-Z])
+        sudo sed -i -e "s/blacklist ${i}-bcm2708/#blacklist ${i}-bcm2708/g" ${RASPI_BL}
+        echo "${MOD_NAME} not present or removed from blacklist"
+    done
+fi
+
+#Adding in /etc/modules
+echo " "
+echo "Adding I2C-dev and i2c-bcm2708 in /etc/modules . . ."
+echo "================================================"
+if grep -q "i2c-dev" /etc/modules; then
+	echo "I2C-dev already present"
+else
+	echo i2c-dev >> /etc/modules
+	echo "I2C-dev added"
+fi
+if grep -q "i2c-bcm2708" /etc/modules; then
+	echo "i2c-bcm2708 already present"
+else
+	echo i2c-bcm2708 >> /etc/modules
+	echo "i2c-bcm2708 added"
+fi
+
+echo " "
+echo "Making I2C changes in /boot/config.txt . . ."
+echo "================================================"
+
+BOOT_CONFIG="/boot/config.txt"
+DTPARAMS="i2c1 i2c_arm"
+for i in ${DTPARAMS}
+do
+    if grep -q "^dtparam=${i}=on$" ${BOOT_CONFIG}; then
+        echo "${i} already present"
+    else
+        echo "dtparam=${i}=on" >> /boot/config.txt
+    fi
+done
+
 			
 pushd ../Software/Python
 sudo python setup.py install
 sudo python3 setup.py install
+
+# install desktop control panel
+sudo cp $SCRIPTDIR/../Software/Python/Control_Panel/pivotpi_control_panel.desktop /home/pi/Desktop/.
+
+
 popd					 
 
-if [[ "$quiet_mode" -eq 0 ]]
+if [[ "$quiet_mode" -eq 1 ]]
 then
     echo " "
     echo "Installation all done"
     echo "Enjoy your PivotPi!"
+else
+	echo " "
+	echo "Please restart to implement changes!"
+	echo "  _____  ______  _____ _______       _____ _______ "
+	echo " |  __ \|  ____|/ ____|__   __|/\   |  __ \__   __|"
+	echo " | |__) | |__  | (___    | |  /  \  | |__) | | |   "
+	echo " |  _  /|  __|  \___ \   | | / /\ \ |  _  /  | |   "
+	echo " | | \ \| |____ ____) |  | |/ ____ \| | \ \  | |   "
+	echo " |_|  \_\______|_____/   |_/_/    \_\_|  \_\ |_|   "
+	echo " "
+	echo "Please restart to implement changes!"
+	echo "To Restart type sudo reboot"
+
+	echo "To finish changes, we will reboot the Pi."
+	echo "Pi must reboot for changes and updates to take effect."
+	echo "If you need to abort the reboot, press Ctrl+C.  Otherwise, reboot!"
+	echo "Rebooting in 5 seconds!"
+	sleep 1
+	echo "Rebooting in 4 seconds!"
+	sleep 1
+	echo "Rebooting in 3 seconds!"
+	sleep 1
+	echo "Rebooting in 2 seconds!"
+	sleep 1
+	echo "Rebooting in 1 seconds!"
+	sleep 1
+	echo "Rebooting now!  Your Pi wake up with a freshly updated Raspberry Pi!"
+	sleep 1
+	sudo reboot
 fi
+
