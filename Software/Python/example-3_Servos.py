@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+#
+# This is an example for controlling 3 servo's and 3 onboard LED's with the PivotPi (https://www.dexterindustries.com/Pivotpi/)
+'''
+## License
+The code here is Licensed under  The MIT License (MIT) . Please review the  LICENSE.md file or (here)[https://github.com/DexterInd/Raspbian_For_Robots/blob/master/LICENSE.md] for more information
+Copyright (C) 2016 Dexter Industries
+'''
+
 from __future__ import print_function
 from __future__ import division
 from builtins import input

@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+#
+# This is the Python library for controlling the PivotPi (https://www.dexterindustries.com/Pivotpi/)
+'''
+## License
+The code here is Licensed under  The MIT License (MIT) . Please review the  LICENSE.md file or (here)[https://github.com/DexterInd/Raspbian_For_Robots/blob/master/LICENSE.md] for more information
+Copyright (C) 2016 Dexter Industries
+'''
+
 import PCA9685
 
 SERVO_1 = 0
