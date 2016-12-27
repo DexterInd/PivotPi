@@ -25,6 +25,6 @@ setuptools.setup(
     description="Drivers and examples for using the PivotPi in Python",
     author="Dexter Industries",
     url="http://www.dexterindustries.com/PivotPi/",
-    py_modules=['pivotpi','PCA9685'],
+    py_modules=['pivotpi','PCA9685', 'I2C', 'Platform'],
     #install_requires=open('requirements.txt').readlines(),
 )

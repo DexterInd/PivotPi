@@ -25,6 +25,7 @@ from builtins import input
 import time
 import pivotpi
 
+# Setup the PivotPi
 try:
     pivotpi = pivotpi.PivotPi(0x40, 60)
 except IOError:
@@ -39,14 +40,14 @@ try:
     while True:
         for i in range (8):
             #pivotpi.angle(i, 0)
-            pivotpi.led(i, 0)
-            pivotpi.angle_microseconds(i, 1500)
-            time.sleep(0.05)
+            pivotpi.led(i, 0)                       # Set the LED to 0 Power
+            pivotpi.angle_microseconds(i, 1500)     # Set the Servo to 1500 angle
+            time.sleep(0.05)        
         for i in range (8):
             #pivotpi.angle(i, 180)
-            pivotpi.led(i, (i + 1) * 4)
-            pivotpi.angle_microseconds(i, 550 + (i * 272))
-            time.sleep(0.05)
+            pivotpi.led(i, (i + 1) * 4)             # Increase the LED Power
+            pivotpi.angle_microseconds(i, 550 + (i * 272))  # Change the pivotpi Angle
+            time.sleep(0.05)                        # Give the system a rest.
 except KeyboardInterrupt:
     print("\nGoodbye")
 except:

@@ -1,24 +1,18 @@
 # PivotPi
 PivotPi is a Servo Controller for the Raspberry Pi!
 
-![alt text](https://raw.githubusercontent.com/DexterInd/PivotPi/master/pivotpi-header.jpg)
+## Datasheets
 
-You will find software support for various programming languages in the **Software** folder
+### PCA9306
+This is a bidirectional I2C level convertor that is used on the PivotPi to covert the 3.3V I2C signals on the Pi side to 5V I2C signals for the Grove side
 
-If you are running Raspbian for Robots, you don't need to worry about setting anything up. 
-If you are running on your own Raspbian card run the install script from the **Install** folder
-
-[You can find the PivotPi Base Kit Servo Controller for the Raspberry Pi here.](https://www.dexterindustries.com/shop/pivotpi-base-kit-servo-controller-for-raspberry-pi/)
-[You can find the PivotPi board servo controller for the Raspberry Pi here.](https://www.dexterindustries.com/shop/pivotpi-board/)
-
-[Learn more about the PivotPi here.](http://www.dexterindustries.com/pivotpi)
-
-## Getting Ideas
-
-Need an idea to get started? [We have a few project examples to get your creative juices flowing.](https://github.com/DexterInd/PivotPi/tree/master/Projects)
+### PCA9685
+This ia 16 channel 12 bit PWM generator that is used to control the servo's and LED's on the PivotPi
 
 ## Getting Help
 Need help? We [have a forum here where you can ask questions or make suggestions](http://forum.dexterindustries.com/c/pivotpi-servo-controller-for-raspberry-pi.
+
+See more at the [PivotPi Site](https://www.dexterindustries.com/pivotpi/)
 
 ## License
 
