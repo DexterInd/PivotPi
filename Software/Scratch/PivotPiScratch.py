@@ -26,11 +26,10 @@ pivot = "Pivot"  # used for dictionary key in the return value
 # a potential % sign (0 or 1 time)
 
 # with PWM in, in case we eventually choose to support it in Scratch
-# regexpivotpi="^PivotPi(Angle|ms|PWM|LED)([1-8])([0-9]+)([%]?)"
-regexpivotpi="^(Pivot|Pivot\s*LED)\s*([1-8])\s*([0-9]+|ON|OFF)\s*(%?)$"
+# regexpivotpi="^PivotPi(Angle|ms|PWM|LED)([1-8])([0-9.]+)([%]?)"
+regexpivotpi="^(Pivot|Pivot\s*LED)\s*([1-8])\s*([0-9.]+|ON|OFF)\s*(%?)$"
 compiled_pivotPi = re.compile(regexpivotpi, re.IGNORECASE)
 
-# print("Lets get the party started")
 scratch_pivotpi=None
 
 try:
@@ -83,7 +82,9 @@ def handlePivotPi(msg):
         
         port = int(regObj.group(2))-1  # port goes from 0 to 7 from now on
         
-        # handle value. Possible incoming values are integers, "on", and "off"
+        # handle value. Possible incoming values are integers,floats,
+	# "on", and "off". When matching the servo with the direction of 
+	# a sprite on screen, Scratch uses floats for no good reason
         value = regObj.group(3).lower()
         
         try:
@@ -100,8 +101,8 @@ def handlePivotPi(msg):
             # if set to off, then turn off
             value = 0
         else:
-            value = int(value)
-        
+            value = int(float(value))
+
         # prepare returning dictionary values
         retdict["pivotcmd"]=cmd
         retdict["pivotport"]=port
@@ -137,7 +138,7 @@ def handlePivotPi(msg):
     # this else should never be reached
     else: 
         if en_debug:
-            print("PivotPi Ignoring Command: {}".format(msg))
+            print("PivotPi does not recognise command: {}".format(msg))
         retval="Unknown"
     
     retdict[pivot]=retval
