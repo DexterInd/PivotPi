@@ -100,8 +100,17 @@ sudo python setup.py install
 sudo python3 setup.py install
 
 # install desktop control panel
-sudo cp $SCRIPTDIR/../Software/Python/Control_Panel/pivotpi_control_panel.desktop /home/pi/Desktop/.
+if [ ! -f /home/pi/Desktop/pivotpi_control_panel.desktop ]
+then
+	echo "Putting PivotPi Controller on the desktop"
+	sudo cp $SCRIPTDIR/../Software/Python/Control_Panel/pivotpi_control_panel.desktop /home/pi/Desktop/.
+fi
 
+if [ ! -d /home/pi/Desktop/PivotPi ] 
+then
+	echo "Putting PivotPi folder on the desktop"
+	sudo ln -s  /home/pi/Dexter/PivotPi /home/pi/Desktop/PivotPi
+fi
 
 popd					 
 
