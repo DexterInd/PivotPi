@@ -74,9 +74,8 @@ int baseReg(int pin);
  *  
  * pinBase: 	Use a pinBase > 64, eg. 300
  * i2cAddress:	The default address is 0x40
- * freq:		Frequency will be capped to range [40..1000] Hertz. Try 50 for servos
  */
-int pca9685Setup(const int pinBase, const int i2cAddress, float freq)
+int pca9685Setup(const int pinBase, const int i2cAddress)
 {
 	// Create a node with 16 pins [0..15] + [16] for all
 	struct wiringPiNodeStruct *node = wiringPiNewNode(pinBase, PIN_ALL + 1);
@@ -97,19 +96,13 @@ int pca9685Setup(const int pinBase, const int i2cAddress, float freq)
 	// wiringPiI2CWriteReg8(fd, PCA9685_MODE1, autoInc);
 	wiringPiI2CWriteReg8(fd, MODE2, (OUTDRV | INVRT));
 	wiringPiI2CWriteReg8(fd, MODE1, ALLCALL);
-	delay(10);
-	
-	
-	// Set frequency of PWM signals. Also ends sleep mode and starts PWM output.
-	// if (freq > 0)
-		// pca9685PWMFreq(fd, freq);
-	
+	delay(5);
 
-	node->fd			= fd;
-	node->pwmWrite		= myPwmWrite;
-	node->digitalWrite	= myOnOffWrite;
-	node->digitalRead	= myOffRead;
-	node->analogRead	= myOnRead;
+	node->fd			     = fd;
+	node->pwmWrite		 = myPwmWrite;
+	node->digitalWrite = myOnOffWrite;
+	node->digitalRead	 = myOffRead;
+	node->analogRead   = myOnRead;
 
 	return fd;
 }
@@ -177,10 +170,10 @@ void set_all_pwm(int fd, int on, int off)
 	// Write to on and off registers and mask the 12 lowest bits of data to overwrite full-on and off
 	// wiringPiI2CWriteReg16(fd, reg	 , on  & 0x0FFF);
 	// wiringPiI2CWriteReg16(fd, reg + 2, off & 0x0FFF);
-	wiringPiI2CWriteReg8(fd,ALL_LED_ON_L, on & 0xFF);
-	wiringPiI2CWriteReg8(fd,ALL_LED_ON_H, on >> 8);
-	wiringPiI2CWriteReg8(fd,ALL_LED_OFF_L, off & 0xFF);
-	wiringPiI2CWriteReg8(fd,ALL_LED_OFF_H, off >> 8);
+	wiringPiI2CWriteReg8(fd, ALL_LED_ON_L, on & 0xFF);
+	wiringPiI2CWriteReg8(fd, ALL_LED_ON_H, on >> 8);
+	wiringPiI2CWriteReg8(fd, ALL_LED_OFF_L, off & 0xFF);
+	wiringPiI2CWriteReg8(fd, ALL_LED_OFF_H, off >> 8);
 }
 
 /**
