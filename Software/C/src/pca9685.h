@@ -30,7 +30,7 @@ extern "C" {
 #endif
 
 // Setup a pca9685 at the specific i2c address
-extern int pca9685Setup(const int pinBase, const int i2cAddress/* = 0x40*/, float freq/* = 50*/);
+extern int pca9685Setup(const int pinBase, const int i2cAddress);
 
 // You now have access to the following wiringPi functions:
 //
