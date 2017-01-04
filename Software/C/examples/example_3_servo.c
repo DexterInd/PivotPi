@@ -5,7 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// gcc example_3_servo.c -lwiringPi -lwiringPiDev -lpthread -lm -lwiringPiPca9685
+/*
+Enter the following command to compile the program:
+  gcc example_3_servo.c -o example_3_servo -lwiringPi -lwiringPiDev -lpthread -lm -lwiringPiPca9685
+Enter the following command to run the program:
+  ./example_3_servo
+*/
 
 int main(void)
 {

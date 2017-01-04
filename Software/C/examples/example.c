@@ -5,7 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// gcc example.c -lwiringPi -lwiringPiDev -lpthread -lm -lwiringPiPca9685
+/*
+Enter the following command to compile the program:
+  gcc example.c -o example -lwiringPi -lwiringPiDev -lpthread -lm -lwiringPiPca9685
+Enter the following command to run the program:
+  ./example
+*/
 
 int main(void)
 {
