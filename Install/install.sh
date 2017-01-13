@@ -114,7 +114,7 @@ fi
 
 popd					 
 
-if [[ "$quiet_mode" -eq 1 ]]
+if quiet_mode
 then
     echo " "
     echo "Installation all done"
