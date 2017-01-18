@@ -12,6 +12,7 @@ try:
 except ImportError:
     raise ImportError,"The wxPython module is required to run this program"
 
+detected_pivotpi = False
 total_servos = 8
 horizontal_spacer = 20
 vertical_spacer = 30
@@ -57,7 +58,8 @@ class BoxSizerFrame(wx.Frame):
         servo_angle = int(event_obj.GetValue())  
         servo_id = int(event_id)//total_ids_per_line
         print ("Setting Pivot {} to {}".format(servo_id+1, servo_angle))
-        p.angle(servo_id, servo_angle )
+        if detected_pivotpi:
+            p.angle(servo_id, servo_angle )
         event.Skip() 
 
     def on_slide(self, event):
@@ -79,7 +81,8 @@ class BoxSizerFrame(wx.Frame):
             # when the field is empty or not an int
                 servo_angle = int(event_obj.GetValue())  
                 print ("Setting Pivot {} to {}".format(servo_id+1, servo_angle))
-                p.angle(servo_id, servo_angle )
+                if detected_pivotpi:
+                    p.angle(servo_id, servo_angle )
                 self.panel.slider[servo_id].SetValue(servo_angle)
             except:
                 pass
@@ -91,7 +94,8 @@ class BoxSizerFrame(wx.Frame):
         led_id = int(event.GetId()//total_ids_per_line)
         led_status = event.GetEventObject().GetValue()
         print("Setting LED {} to {}".format(led_id+1, led_status*254))
-        p.led(led_id,led_status*254)
+        if detected_pivotpi:
+            p.led(led_id,led_status*254)
 
 class BoxSizerPanel(wx.Panel):
     def __init__(self, *args, **kwargs):
@@ -111,6 +115,12 @@ class BoxSizerPanel(wx.Panel):
 
         self.vsizer = wx.BoxSizer(wx.VERTICAL)
 
+        # contains the titlestr_sizer and the icon
+        title_sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        # contains the title and potential warning that pivotpi is not detected
+        titlestr_sizer = wx.BoxSizer(wx.VERTICAL)
+
         title = wx.StaticText(self, -1,
                         label="PivotPi Control Panel", style=wx.ALIGN_CENTRE)
         title.SetFont(wx.Font(  20,
@@ -118,10 +128,22 @@ class BoxSizerPanel(wx.Panel):
                                 wx.FONTFAMILY_DEFAULT,
                                 wx.FONTSTYLE_NORMAL,
                                 wx.FONTWEIGHT_BOLD))
-        title_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        bitmap = wx.Image("PivotPiIcon.jpg",wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        titlestr_sizer.Add(title, 1, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 20)
+
+        if not detected_pivotpi:
+            warning_str = wx.StaticText(self, -1,
+                        label="PivotPi Not Detected", style=wx.ALIGN_CENTRE)
+            warning_str.SetFont(wx.Font(  12,
+                                wx.FONTSTYLE_NORMAL,
+                                wx.FONTFAMILY_DEFAULT,
+                                wx.FONTSTYLE_NORMAL,
+                                wx.FONTWEIGHT_BOLD))
+            titlestr_sizer.Add(warning_str, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 20)
+
+        bitmap = wx.Image("/home/pi/Dexter/PivotPi/Software/Python/Control_Panel/PivotPiIcon.jpg",wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         title_icon = wx.StaticBitmap(self, -1, bitmap)
-        title_sizer.Add(title, 1, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 20)
+
+        title_sizer.Add(titlestr_sizer, 1, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 20)
         title_sizer.Add(title_icon,0,wx.ALIGN_CENTER_VERTICAL|wx.LEFT,40)
         self.vsizer.AddSpacer(20)
         self.vsizer.Add(title_sizer, 1, wx.ALIGN_CENTER_HORIZONTAL, 20)
@@ -180,17 +202,18 @@ if __name__ == "__main__":
  
     try:
         p = PivotPi()
-        app = PivotControlApp(False)
+        detected_pivotpi = True
+
 
     except:
-        class NoPivot(wx.App):
-            def OnInit(self):
-                dlg = wx.MessageBox("Unfortunately no PivotPi is Detected\nhttp://DexterIndustries.com/pivotpi for more details", 
-                    "ERROR", wx.ICON_WARNING)
-                return True
-                
+        detected_pivotpi = False
+        # class NoPivot(wx.App):
+        #     def OnInit(self):
+        #         dlg = wx.MessageBox("Unfortunately no PivotPi is Detected\nhttp://DexterIndustries.com/pivotpi for more details", 
+        #             "ERROR", wx.ICON_WARNING)
+        #         return True                
+        # app = NoPivot(False)
 
-        app = NoPivot(False)
-
+    app = PivotControlApp(False)
     app.MainLoop()
         
