@@ -59,7 +59,7 @@ class BoxSizerFrame(wx.Frame):
         servo_id = int(event_id)//total_ids_per_line
         print ("Setting Pivot {} to {}".format(servo_id+1, servo_angle))
         if detected_pivotpi:
-            p.angle(servo_id, servo_angle )
+            my_pivot.angle(servo_id, servo_angle )
         event.Skip() 
 
     def on_slide(self, event):
@@ -82,7 +82,7 @@ class BoxSizerFrame(wx.Frame):
                 servo_angle = int(event_obj.GetValue())  
                 print ("Setting Pivot {} to {}".format(servo_id+1, servo_angle))
                 if detected_pivotpi:
-                    p.angle(servo_id, servo_angle )
+                    my_pivot.angle(servo_id, servo_angle )
                 self.panel.slider[servo_id].SetValue(servo_angle)
             except:
                 pass
@@ -95,7 +95,7 @@ class BoxSizerFrame(wx.Frame):
         led_status = event.GetEventObject().GetValue()
         print("Setting LED {} to {}".format(led_id+1, led_status*254))
         if detected_pivotpi:
-            p.led(led_id,led_status*254)
+            my_pivot.led(led_id,led_status*254)
 
 class BoxSizerPanel(wx.Panel):
     def __init__(self, *args, **kwargs):
@@ -201,7 +201,7 @@ class BoxSizerPanel(wx.Panel):
 if __name__ == "__main__":
  
     try:
-        p = PivotPi()
+        my_pivot = PivotPi()
         detected_pivotpi = True
 
 
