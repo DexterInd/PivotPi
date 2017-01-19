@@ -1,4 +1,8 @@
 #! /bin/bash
+curl --silent https://raw.githubusercontent.com/DexterInd/script_tools/master/install_script_tools.sh | bash
+
+# needs to be sourced from here when we call this as a standalone
+source /home/pi/Dexter/lib/Dexter/script_tools/functions_library.sh
 
 if [[ $EUID -ne 0 ]]; then
 	echo "This script must be run as root" 
@@ -6,17 +10,9 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 SCRIPTDIR="$(readlink -f $(dirname $0))"
-echo $SCRIPTDIR
+pushd $SCRIPTDIR > /dev/null
 
-#check if there's an argument on the command line
-if [[ -f /home/pi/quiet_mode ]]
-then
-	quiet_mode=1
-else
-	quiet_mode=0
-fi
-
-if [[ "$quiet_mode" -eq "0" ]]
+if  ! quiet_mode
 then
 	echo "  _____            _                                ";
 	echo " |  __ \          | |                               ";
@@ -45,6 +41,10 @@ echo ""
 
 echo "Welcome to PivotPi Installer."
 
+if ! quiet_mode
+	then
+	sudo apt-get update
+fi
 sudo apt-get install python-pip git libi2c-dev i2c-tools python-smbus python3-smbus python-dev -y
 
 echo " "
@@ -95,7 +95,7 @@ do
 done
 
 			
-pushd ../Software/Python
+cd ../Software/Python
 sudo python setup.py install
 sudo python3 setup.py install
 
@@ -114,7 +114,7 @@ fi
 
 popd					 
 
-if [[ "$quiet_mode" -eq 1 ]]
+if quiet_mode
 then
     echo " "
     echo "Installation all done"
