@@ -18,7 +18,7 @@ If you are running on your own Raspbian card run the install script from the **I
 Need an idea to get started? [We have a few project examples to get your creative juices flowing.](https://github.com/DexterInd/PivotPi/tree/master/Projects)
 
 ## Getting Help
-Need help? We [have a forum here where you can ask questions or make suggestions](http://forum.dexterindustries.com/c/pivotpi-servo-controller-for-raspberry-pi.
+Need help? We [have a forum here where you can ask questions or make suggestions](http://forum.dexterindustries.com/c/pivotpi-servo-controller-for-raspberry-pi).
 
 ## License
 
