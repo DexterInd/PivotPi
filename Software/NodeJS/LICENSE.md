@@ -3,7 +3,7 @@
 The MIT License (MIT)
 
 PivotPi is a Servo Controller for the Raspberry Pi!
-Copyright (C) 2016  Dexter Industries
+Copyright (C) 2017  Dexter Industries
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
