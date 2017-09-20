@@ -13,6 +13,14 @@ If you are running on your own Raspbian card run the install script from the **I
 
 [Learn more about the PivotPi here.](http://www.dexterindustries.com/pivotpi)
 
+
+# Quick Install
+In order to quick install the `PivotPi` repository, open up a terminal and type the following command:
+```
+sudo curl -L dexterindustries.com/update_pivotpi | bash
+```
+The same command can be used for updating the `PivotPi` to the latest version.
+
 ## Getting Ideas
 
 Need an idea to get started? [We have a few project examples to get your creative juices flowing.](https://github.com/DexterInd/PivotPi/tree/master/Projects)
