@@ -17,7 +17,7 @@ If you are running on your own Raspbian card run the install script from the **I
 # Quick Install
 In order to quick install the `PivotPi` repository, open up a terminal and type the following command:
 ```
-sudo curl -L dexterindustries.com/update_pivotpi | bash
+sudo curl -kL dexterindustries.com/update_pivotpi | bash
 ```
 The same command can be used for updating the `PivotPi` to the latest version.
 
