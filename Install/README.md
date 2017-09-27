@@ -1,20 +1,29 @@
 # PivotPi
+
 PivotPi is a Servo Controller for the Raspberry Pi!
 
 ## Installation
-If you are running Raspbian for Robots image from Dexter Industries, they you should just run the DI update on the Desktop.
 
-If you are running your own custom image. You will have to run the install script first.
+For quick-installing the PivotPi on your Raspberry Pi, enter the following command:
+```
+sudo curl -kL dexterindustries.com/update_pivotpi | bash
+```
+The other way of installing the PivotPi is by doing the following steps:
 
-Make the install script executable:
+1. Clone the repository on your Raspberry Pi.
+```
+git clone https://github.com/DexterInd/PivotPi.git
+```
 
-`sudo chmod +x install.sh`
+2. Change directory to this folder (the `/Install` folder).
 
-Run the install.sh script to install the PivotPi libraries:
-
-`sudo bash install.sh`
+3. Run the install script:
+```
+sudo bash install.sh
+```
 
 ## Getting Help
+
 Need help? We [have a forum here where you can ask questions or make suggestions](http://forum.dexterindustries.com/c/pivotpi-servo-controller-for-raspberry-pi.
 
 See more at the [PivotPi Site](https://www.dexterindustries.com/pivotpi/)
