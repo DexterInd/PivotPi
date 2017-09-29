@@ -98,6 +98,7 @@ done
 cd ../Software/Python
 sudo python setup.py install
 sudo python3 setup.py install
+sudo pip install future
 
 # install desktop control panel
 if [ ! -f /home/pi/Desktop/pivotpi_control_panel.desktop ]
