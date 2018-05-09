@@ -21,6 +21,11 @@ curl -kL dexterindustries.com/update_pivotpi | bash
 ```
 The same command can be used for updating the `PivotPi` to the latest version.
 
+Or if you want to run the install script directly from the repository you can run this:
+```
+bash install.sh
+```
+
 ## Getting Ideas
 
 Need an idea to get started? [We have a few project examples to get your creative juices flowing.](https://github.com/DexterInd/PivotPi/tree/master/Projects)

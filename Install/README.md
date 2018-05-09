@@ -10,6 +10,10 @@ The quickest way for installing the PivotPi is to enter the following command:
 ```
 curl -kL dexterindustries.com/update_pivotpi | bash
 ```
+Or if you want to run the install script directly from the repository you can run:
+```
+bash install.sh
+```
 
 By default, the PivotPi package is installed system-wide and [script_tools](https://github.com/DexterInd/script_tools) is completely updated each time the script is ran.
 
