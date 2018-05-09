@@ -5,7 +5,7 @@ PivotPi is a Servo Controller for the Raspberry Pi!
 
 You will find software support for various programming languages in the **Software** folder
 
-If you are running Raspbian for Robots, you don't need to worry about setting anything up. 
+If you are running Raspbian for Robots, you don't need to worry about setting anything up.
 If you are running on your own Raspbian card run the install script from the **Install** folder
 
 [You can find the PivotPi Base Kit Servo Controller for the Raspberry Pi here.](https://www.dexterindustries.com/shop/pivotpi-base-kit-servo-controller-for-raspberry-pi/)
@@ -17,7 +17,7 @@ If you are running on your own Raspbian card run the install script from the **I
 # Quick Install
 In order to quick install the `PivotPi` repository, open up a terminal and type the following command:
 ```
-sudo curl -kL dexterindustries.com/update_pivotpi | bash
+curl -kL dexterindustries.com/update_pivotpi | bash
 ```
 The same command can be used for updating the `PivotPi` to the latest version.
 
