@@ -160,11 +160,12 @@ install_scriptools_and_rfrtools() {
       echo "RFR_Tools failed installing with exit code $ret_val. Exiting."
       exit 7
     fi
-    echo "Done installing RFR_Tool"
+    echo "Done installing RFR_Tools"
   fi
 
   # update script_tools first
-  curl --silent -kL https://raw.githubusercontent.com/RobertLucian/script_tools/feature/strip-down-scriptools/install_script_tools.sh > $PIHOME/.tmp_script_tools.sh
+  curl --silent -kL https://raw.githubusercontent.com/DexterInd/script_tools/develop/install_script_tools.sh > $PIHOME/.tmp_script_tools.sh
+  
   echo "Installing script_tools. This might take a while.."
   bash $PIHOME/.tmp_script_tools.sh $selectedbranch > /dev/null
   ret_val=$?
@@ -292,7 +293,7 @@ install_python_pkgs_and_dependencies() {
   configure_interfaces
 
   # install control panel on desktop
-  if [[ -f $PIHOME/Desktop ]]; then
+  if [[ -d $PIHOME/Desktop ]]; then
     cp $PIVOTPI_DIR/Software/Python/Control_Panel/pivotpi_control_panel.desktop $PIHOME/Desktop
   fi
 
