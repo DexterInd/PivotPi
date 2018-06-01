@@ -18,88 +18,17 @@ horizontal_spacer = 20
 vertical_spacer = 30
 total_ids_per_line = 5
 degree_str = " Deg"
-class PivotControlApp(wx.App):
-    def OnInit(self):
-        self.frame = BoxSizerFrame(None, title="PivotPi Control")
-        self.frame.Show()
 
-        return True
+class MainPanel(wx.Panel):
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent=parent)
+        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
+        self.SetBackgroundColour(wx.WHITE)
+        self.frame = parent
 
-class BoxSizerFrame(wx.Frame):
-    def __init__(self, *args, **kwargs):
-        super(BoxSizerFrame, self).__init__(*args,**kwargs)
-        self.panel = BoxSizerPanel(self)
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self.panel, 1, wx.EXPAND)
-        self.SetSizer(sizer)
-        self.SetInitialSize()
-
-        for i in range(total_servos):
-            self.Bind(wx.EVT_BUTTON, self.OnExit, self.panel.exit_btn)
-            self.Bind(wx.EVT_BUTTON, self.OnCode, self.panel.code_btn)
-            self.panel.slider[i].Bind(wx.EVT_LEFT_UP, self.on_left_click)
-            self.panel.slider[i].Bind(wx.EVT_SCROLL_THUMBTRACK, self.on_slide)
-            self.Bind(wx.EVT_CHECKBOX, self.OnLED, self.panel.led[i])
-            self.panel.txt[i].Bind(wx.EVT_CHAR, self.OnText, self.panel.txt[i])
-        self.Centre()
-
-    def OnExit(self, event):
-        exit()
-
-    def OnCode(self, event):
-        pivotpi_path_cmd = "pcmanfm /home/pi/Dexter/PivotPi"
-        subprocess.Popen(pivotpi_path_cmd, shell=True)
-
-
-    def on_left_click(self, event):
-        event_id = event.GetId()
-        event_obj = event.GetEventObject()
-        position = event_obj.GetValue()   
-        servo_angle = int(event_obj.GetValue())  
-        servo_id = int(event_id)//total_ids_per_line
-        print ("Setting Pivot {} to {}".format(servo_id+1, servo_angle))
-        if detected_pivotpi:
-            my_pivot.angle(servo_id, servo_angle )
-        event.Skip() 
-
-    def on_slide(self, event):
-        event_id = event.GetId()
-        event_obj = event.GetEventObject()
-        servo_id = int(event_id)//total_ids_per_line
-        position = event_obj.GetValue()
-        self.panel.txt[servo_id].SetValue(str(position))
-        event.Skip()
-
-    def OnText(self, event):
-        event_id = event.GetId()
-        event_obj = event.GetEventObject()
-        servo_id = int(event_id)//total_ids_per_line
-        key_code = (event.GetKeyCode())
-        if key_code == 13 or key_code == 9:  # ENTER KEY or TAB
-            try:
-            # the try may fail on getting a servo_angle 
-            # when the field is empty or not an int
-                servo_angle = int(event_obj.GetValue())  
-                print ("Setting Pivot {} to {}".format(servo_id+1, servo_angle))
-                if detected_pivotpi:
-                    my_pivot.angle(servo_id, servo_angle )
-                self.panel.slider[servo_id].SetValue(servo_angle)
-            except:
-                pass
-            self.panel.txt[(servo_id+1)].SetFocus() 
-
-        event.Skip()        
-
-    def OnLED(self, event):
-        led_id = int(event.GetId()//total_ids_per_line)
-        led_status = event.GetEventObject().GetValue()
-        print("Setting LED {} to {}".format(led_id+1, led_status*254))
-        if detected_pivotpi:
-            my_pivot.led(led_id,led_status*254)
-
-class BoxSizerPanel(wx.Panel):
-    def __init__(self, *args, **kwargs):
-        super(BoxSizerPanel, self).__init__(*args, **kwargs)
+        font = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, u'Consolas')
+        # font = wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, u'Helvetica')
+        self.SetFont(font)
 
         self.txt = []
         self.fields = []
@@ -107,11 +36,6 @@ class BoxSizerPanel(wx.Panel):
         self.servo = []
         self.slider = []
         self.led = []
-
-
-        self._DoLayout()
-
-    def _DoLayout(self):
 
         self.vsizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -147,6 +71,7 @@ class BoxSizerPanel(wx.Panel):
         title_sizer.Add(title_icon,0,wx.ALIGN_CENTER_VERTICAL|wx.LEFT,40)
         self.vsizer.AddSpacer(20)
         self.vsizer.Add(title_sizer, 1, wx.ALIGN_CENTER_HORIZONTAL, 20)
+        self.vsizer.AddSpacer(20)
 
         for i in range(total_servos):
 
@@ -177,34 +102,112 @@ class BoxSizerPanel(wx.Panel):
             self.fields[i].Add(self.led[i])
             self.fields[i].AddSpacer(horizontal_spacer)
 
-        self.vsizer.AddSpacer(vertical_spacer)
-        for i in range(total_servos):
             self.vsizer.Add(self.fields[i])
-            self.vsizer.AddSpacer(10)
-        self.vsizer.AddSpacer(vertical_spacer-10)
+            self.vsizer.AddSpacer(horizontal_spacer)
+
+        self.vsizer.AddSpacer(vertical_spacer)
+
+        for i in range(total_servos):
+            self.slider[i].Bind(wx.EVT_LEFT_UP, self.on_left_click)
+            self.slider[i].Bind(wx.EVT_SCROLL_THUMBTRACK, self.on_slide)
+            self.Bind(wx.EVT_CHECKBOX, self.OnLED, self.led[i])
+            self.txt[i].Bind(wx.EVT_CHAR, self.OnText, self.txt[i])
 
         exit_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.exit_btn = wx.Button(self, label="Exit")
+        self.Bind(wx.EVT_BUTTON, self.OnExit, self.exit_btn)
         self.exit_txt = wx.StaticText(self, label=" ")
         self.code_btn = wx.Button(self, label="Go to PivotPi Code Folder")
+        self.Bind(wx.EVT_BUTTON, self.OnCode, self.code_btn)
         self.exit_btn.SetBackgroundColour("White")
         self.code_btn.SetBackgroundColour("White")
         exit_sizer.Add(self.exit_txt, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL|wx.LEFT, 100)
         exit_sizer.Add(self.code_btn, 0, wx.ALIGN_CENTER_VERTICAL|wx.CENTER, 60)
-        exit_sizer.Add(self.exit_txt, 1, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND|wx.LEFT, 100)
+        # exit_sizer.Add(self.exit_txt, 1, wx.ALIGN_CENTER_VERTICAL|wx.EXPAND|wx.LEFT, 100)
         exit_sizer.Add(self.exit_btn, 0, wx.ALIGN_CENTER_VERTICAL|wx.RIGHT, 10)
         self.vsizer.Add(exit_sizer, 1, wx.EXPAND|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.BOTTOM, 10)
 
         self.SetSizer(self.vsizer)
 
 
+    def OnExit(self, event):
+        self.frame.Close()
+
+    def OnCode(self, event):
+        pivotpi_path_cmd = "pcmanfm /home/pi/Dexter/PivotPi"
+        subprocess.Popen(pivotpi_path_cmd, shell=True)
+
+
+    def on_left_click(self, event):
+        event_id = event.GetId()
+        event_obj = event.GetEventObject()
+        position = event_obj.GetValue()   
+        servo_angle = int(event_obj.GetValue())  
+        servo_id = int(event_id)//total_ids_per_line
+        print ("Setting Pivot {} to {}".format(servo_id+1, servo_angle))
+        if detected_pivotpi:
+            my_pivot.angle(servo_id, servo_angle )
+        event.Skip() 
+
+    def on_slide(self, event):
+        event_id = event.GetId()
+        event_obj = event.GetEventObject()
+        servo_id = int(event_id)//total_ids_per_line
+        position = event_obj.GetValue()
+        self.txt[servo_id].SetValue(str(position))
+        event.Skip()
+
+    def OnText(self, event):
+        event_id = event.GetId()
+        event_obj = event.GetEventObject()
+        servo_id = int(event_id)//total_ids_per_line
+        key_code = (event.GetKeyCode())
+        if key_code == 13 or key_code == 9:  # ENTER KEY or TAB
+            try:
+            # the try may fail on getting a servo_angle 
+            # when the field is empty or not an int
+                servo_angle = int(event_obj.GetValue())  
+                print ("Setting Pivot {} to {}".format(servo_id+1, servo_angle))
+                if detected_pivotpi:
+                    my_pivot.angle(servo_id, servo_angle )
+                self.slider[servo_id].SetValue(servo_angle)
+            except:
+                pass
+            self.txt[(servo_id+1)].SetFocus() 
+
+        event.Skip()        
+
+    def OnLED(self, event):
+        led_id = int(event.GetId()//total_ids_per_line)
+        led_status = event.GetEventObject().GetValue()
+        print("Setting LED {} to {}".format(led_id+1, led_status*254))
+        if detected_pivotpi:
+            my_pivot.led(led_id,led_status*254)
+
+
+class MainFrame(wx.Frame):
+    def __init__(self):
+        """Constructor"""
+        # wx.ComboBox
+
+        # wx.Icon(ICON_PATH+'favicon.ico', wx.BITMAP_TYPE_ICO)
+        wx.Log.SetVerbose(False)
+        wx.Frame.__init__(self, None, title="PivotPi Control Panel", size=(650,600))		# Set the fram size
+
+        panel = MainPanel(self)
+        self.Center()
+
+class Main(wx.App):
+    def __init__(self, redirect=False, filename=None):
+        """Constructor"""
+        wx.App.__init__(self, redirect, filename)
+        dlg = MainFrame()
+        dlg.Show()
+
 if __name__ == "__main__":
- 
     try:
         my_pivot = PivotPi()
         detected_pivotpi = True
-
-
     except:
         detected_pivotpi = False
         # class NoPivot(wx.App):
@@ -214,6 +217,6 @@ if __name__ == "__main__":
         #         return True                
         # app = NoPivot(False)
 
-    app = PivotControlApp(False)
+    app = Main()
     app.MainLoop()
         
