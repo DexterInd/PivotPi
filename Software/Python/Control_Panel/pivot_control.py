@@ -1,6 +1,5 @@
 from __future__ import print_function
 from __future__ import division
-from builtins import input
 
 from time import sleep
 from pivotpi import *
