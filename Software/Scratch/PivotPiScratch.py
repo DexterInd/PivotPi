@@ -12,7 +12,8 @@ import sys
 try:
     import pivotpi
 except:
-    print("Cannot find PivotPi library")
+    pass
+    # print("Cannot find PivotPi library")
 
 en_debug = 1
 en_pivotpi = 1
@@ -33,8 +34,9 @@ scratch_pivotpi=None
 
 try:
     scratch_pivotpi = pivotpi.PivotPi()
+    print("PivotPi is detected.")
 except:
-    print("PivotPi not Answering")
+    print("No PivotPi has been found.")
 
 def isPivotPiMsg(msg):
     '''
