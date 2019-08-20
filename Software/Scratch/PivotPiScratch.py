@@ -36,7 +36,8 @@ try:
     scratch_pivotpi = pivotpi.PivotPi()
     print("PivotPi is detected.")
 except:
-    print("No PivotPi has been found.")
+    # print("No PivotPi has been found.")
+    pass
 
 def isPivotPiMsg(msg):
     '''
