@@ -11,13 +11,13 @@ pivotpi = pivotpi.PivotPi(0x40, 63.54) # Use PivotPi I2C address 0x40, and set t
 
 BP = brickpi3.BrickPi3()
 
-COLOR_SENSOR_PORT = BP.PORT_1 # Color sensor on BrickPi sensor port 1
-TOUCH_SENSOR_PORT = BP.PORT_2 # Touch sensor on BrickPi sensor port 1
-BELT_MOTOR_PORT   = BP.PORT_A # Belt motor on BrickPi motor port A
-ARM_SERVO         = 0         # Arm servo on PivotPi servo channel 1
+COLOR_SENSOR_PORT = BP.PORT_1 # Color sensor on BrickPi3 sensor port 1
+TOUCH_SENSOR_PORT = BP.PORT_2 # Touch sensor on BrickPi3 sensor port 2
+BELT_MOTOR_PORT   = BP.PORT_A # Belt motor on BrickPi3 motor port A
+ARM_SERVO         = 0         # Arm servo on PivotPi servo channel 1 (channels 1-8 are indexed 0-7)
 
-BP.set_sensor_type(COLOR_SENSOR_PORT, BP.SENSOR_TYPE.NXT_COLOR_FULL) # Configure for an NXT color sensor on BrickPi sensor port 1.
-BP.set_sensor_type(TOUCH_SENSOR_PORT, BP.SENSOR_TYPE.TOUCH)          # Configure for a touch sensor on BrickPi sensor port 2.
+BP.set_sensor_type(COLOR_SENSOR_PORT, BP.SENSOR_TYPE.NXT_COLOR_FULL) # Configure for an NXT color sensor on BrickPi3 sensor port 1.
+BP.set_sensor_type(TOUCH_SENSOR_PORT, BP.SENSOR_TYPE.TOUCH)          # Configure for a touch sensor on BrickPi3 sensor port 2.
 
 # Tell the arm to be extended or retracted
 def Arm(Position):
@@ -78,7 +78,7 @@ def GetMMColor():
             #print("%4.2f %4.2f %4.2f   %4.2f %4.2f %4.2f" % (r, g, b, h, s, v))
         except brickpi3.SensorError:
             return 0
-        time.sleep(0.007) # Give the BrickPi time to update the color sensor values
+        time.sleep(0.007) # Give the BrickPi3 time to update the color sensor values
     
     # red
     if(V >= 0.63 and V <= 0.81 and (H <= 0.05 or H >= 0.97)):
