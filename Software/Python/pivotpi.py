@@ -41,13 +41,17 @@ class PivotPi(object):
     servo_min = 150  # Min pulse length out of 4096
     servo_max = 600  # Max pulse length out of 4096
     frequency = 60;
-    def __init__(self, addr = 0x40, actual_frequency = 60):# Set the address and optionally the PWM frequency, which should be 60Hz, but can be off by at least 5%. One measures at about 59.1, one at about 60.1, and one at about 63.5Hz.
+    def __init__(self, addr = 0x40, actual_frequency = 60):
+        '''
+        Set the address and optionally the PWM frequency, which should be 60Hz, but can be off by at least 5%. 
+        One sample pivotpi measures at about 59.1, another at about 60.1, and yet another at about 63.5Hz.
+        '''
         try:
             self.servo_controller = PCA9685.PCA9685(address=addr)
             self.frequency = actual_frequency;
             
             # Set frequency to 60hz, good for servos.
-            self.servo_controller.set_pwm_freq(60)
+            self.servo_controller.set_pwm_freq(self.frequency)
         except:
             # pass
             raise IOError("PivotPi not connected")
